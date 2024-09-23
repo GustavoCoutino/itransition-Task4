@@ -29,8 +29,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin:
-      "https://itransition-task4-jl9bo81os-gustavocoutinos-projects.vercel.app/",
+    origin: `${process.env.FRONTEND_DOMAIN}`,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })

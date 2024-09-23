@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-
+const API_URL = "https://itransition-task4-hk2t.onrender.com";
 function Admin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -13,14 +13,11 @@ function Admin() {
   const checkUserStatus = async () => {
     const token = localStorage.getItem("auth-token");
     try {
-      const response = await axios.get(
-        "http://localhost:5001/api/auth/check-status",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/auth/check-status`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.data.message === "User is blocked") {
         logout();
@@ -60,7 +57,7 @@ function Admin() {
     try {
       const token = localStorage.getItem("auth-token");
       await axios.put(
-        `http://localhost:5001/api/users/${url}`,
+        `${API_URL}/api/users/${url}`,
         { users: selectedUsers },
         {
           headers: {
@@ -80,7 +77,7 @@ function Admin() {
   const deleteUsers = async () => {
     try {
       const token = localStorage.getItem("auth-token");
-      await axios.delete("http://localhost:5001/api/users/delete", {
+      await axios.delete(`${API_URL}/api/users/delete`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

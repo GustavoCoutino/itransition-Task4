@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+const API_URL = "https://itransition-task4-hk2t.onrender.com";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -9,13 +9,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
+        email,
+        password,
+      });
 
       localStorage.setItem("auth-token", response.data.token);
       navigate("/admin");
@@ -29,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const register = async ({ name, email, password, position }) => {
     try {
       const registrationTime = new Date().toISOString();
-      await axios.post("http://localhost:5001/api/auth/register", {
+      await axios.post(`${API_URL}/api/auth/register`, {
         name,
         email,
         password,
@@ -49,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   const getUsers = async () => {
     const token = localStorage.getItem("auth-token");
     try {
-      const response = await axios.get("http://localhost:5001/api/users/all", {
+      const response = await axios.get(`${API_URL}/api/users/all`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
