@@ -12,11 +12,76 @@ function Register() {
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!name) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Name",
+        text: "Please enter your name.",
+      });
+      return;
+    }
+
+    if (!email) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Email",
+        text: "Please enter your email.",
+      });
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Email",
+        text: "Please enter a valid email address.",
+      });
+      return;
+    }
+
+    if (!password) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Password",
+        text: "Please enter your password.",
+      });
+      return;
+    }
+
+    if (!confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Confirm Password",
+        text: "Please confirm your password.",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Mismatch",
+        text: "Passwords do not match.",
+      });
+      return;
+    }
+
     try {
       await register({ name, email, password, position });
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "You have successfully registered!",
+      });
+      navigate("/login");
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -33,7 +98,6 @@ function Register() {
       value: name,
       setValue: setName,
       placeholder: "Enter your name",
-      required: true,
     },
     {
       label: "Email",
@@ -41,7 +105,6 @@ function Register() {
       value: email,
       setValue: setEmail,
       placeholder: "Enter your email",
-      required: true,
     },
     {
       label: "Password",
@@ -49,7 +112,6 @@ function Register() {
       value: password,
       setValue: setPassword,
       placeholder: "Enter your password",
-      required: true,
     },
     {
       label: "Confirm Password",
@@ -57,7 +119,6 @@ function Register() {
       value: confirmPassword,
       setValue: setConfirmPassword,
       placeholder: "Confirm your password",
-      required: true,
     },
     {
       label: "Position",
@@ -85,7 +146,6 @@ function Register() {
                 placeholder={field.placeholder}
                 value={field.value}
                 onChange={(e) => field.setValue(e.target.value)}
-                required={field.required}
               />
             </div>
           ))}

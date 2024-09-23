@@ -16,8 +16,38 @@ function Login() {
     }
   }, [navigate]);
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Email",
+        text: "Please enter your email.",
+      });
+      return;
+    }
+    if (!validateEmail(email)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Email",
+        text: "Please enter a valid email address.",
+      });
+      return;
+    }
+    if (!password) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Password",
+        text: "Please enter your password.",
+      });
+      return;
+    }
+
     try {
       await login(email, password);
     } catch (err) {
@@ -28,6 +58,7 @@ function Login() {
       });
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -43,7 +74,6 @@ function Login() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
           <div className="mb-6">
@@ -56,7 +86,6 @@ function Login() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
           <button
