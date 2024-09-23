@@ -28,6 +28,7 @@ app.use((req, res, next) => {
 });
 
 const allowedOrigins = [
+  "https://itransition-task4-alpha.vercel.app",
   "https://itransition-task4-git-main-gustavocoutinos-projects.vercel.app",
   "https://itransition-task4-jl9bo81os-gustavocoutinos-projects.vercel.app",
 ];
