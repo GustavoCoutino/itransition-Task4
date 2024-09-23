@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("auth-token", response.data.token);
       navigate("/admin");
     } catch (error) {
+      console.log(error);
       throw new Error(
         error.response?.data?.message || "An error occurred during login"
       );
