@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 const API_URL = "https://itransition-task4-hk2t.onrender.com";
+
 function Admin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -66,6 +67,7 @@ function Admin() {
         }
       );
       fetchUsers();
+      await checkUserStatus();
     } catch (error) {
       console.error(
         `Failed to ${url} users:`,
@@ -84,6 +86,7 @@ function Admin() {
         data: { users: selectedUsers },
       });
       fetchUsers();
+      await checkUserStatus();
     } catch (error) {
       console.error(
         "Failed to delete users:",
