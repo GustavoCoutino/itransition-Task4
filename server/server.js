@@ -27,9 +27,14 @@ app.use((req, res, next) => {
   next();
 });
 
+const allowedOrigins = [
+  "https://itransition-task4-git-main-gustavocoutinos-projects.vercel.app",
+  "https://itransition-task4-jl9bo81os-gustavocoutinos-projects.vercel.app",
+];
+
 app.use(
   cors({
-    origin: `${process.env.FRONTEND_DOMAIN}`,
+    origin: allowedOrigins,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
