@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5001;
 
 app.use(bodyParser.json());
 
-const db = mysql.createConnection({
+const db = await mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
